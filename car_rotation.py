@@ -21,6 +21,7 @@ class RotateWheel:
 
     def initialiseAxle(self, control_pin):
         control_pin.start(self.DUTY_CYCLE)
+        self.CURRENT_DIRECTION = "CENTER"
         print("SERVO INITIALISED, INSERT THE AXLE")
 
     def turn(self, direction, control_pin):

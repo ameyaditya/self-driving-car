@@ -23,5 +23,6 @@ try:
             rw.turn_half_right(p)
         elif choice == "5":
             rw.turn_full_right(p)
-except Exception:
+except Exception as e:
+    print(f"ERROR {e}")
     GPIO.cleanup()
