@@ -5,11 +5,11 @@ DUTY_CYCLE_CHANGE_INTERVAL = 0.2
 TURN_SPEED = 0.5 # increase this value to make it turn slower
 
 DIRECTION = {
-    "CENTER": {DUTY_CYCLE: 7.4}
-    "HALF_RIGHT": { DUTY_CYCLE: 8.0}
-    "FULL_RIGHT": {DUTY_CYCLE: 8.4}
-    "HALF_LEFT": {DUTY_CYCLE: 6.8}
-    "FULL_LEFT": {DUTY_CYCLE: 6.4}
+    "CENTER": {"DUTY_CYCLE": 7.4}
+    "HALF_RIGHT": { "DUTY_CYCLE": 8.0}
+    "FULL_RIGHT": {"DUTY_CYCLE": 8.4}
+    "HALF_LEFT": {"DUTY_CYCLE": 6.8}
+    "FULL_LEFT": {"DUTY_CYCLE": 6.4}
 }
 
 
