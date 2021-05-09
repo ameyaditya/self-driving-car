@@ -36,7 +36,7 @@ class RotateWheel:
         
         while self.DUTY_CYCLE != DIRECTION[direction]["DUTY_CYCLE"]:
             print(self.DUTY_CYCLE)
-            self.DUTY_CYCLE = self.DUTY_CYCLE + (DUTY_CYCLE_CHANGE_INTERVAL * updater)
+            self.DUTY_CYCLE = round(self.DUTY_CYCLE + (DUTY_CYCLE_CHANGE_INTERVAL * updater), 1)
             control_pin.ChangeDutyCycle(self.DUTY_CYCLE)
             time.sleep(TURN_SPEED)
         self.CURRENT_DIRECTION = direction
