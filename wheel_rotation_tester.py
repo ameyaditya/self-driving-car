@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import RotateWheel from car_rotation
+from car_rotation import RotateWheel
 
 rw = RotateWheel()
 
