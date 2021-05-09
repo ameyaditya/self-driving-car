@@ -10,6 +10,8 @@ GPIO.setup(servo,GPIO.OUT)
 p=GPIO.PWM(servo,50)
 
 p.start(2.5)
+input()
+
 try:
     while True:
         print("FORWARD")
