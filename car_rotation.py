@@ -18,9 +18,13 @@ class RotateWheel:
     def __init__(self):
         self.DUTY_CYCLE = INITIAL_DUTY_CYCLE
         self.CURRENT_DIRECTION = None
+    
+    def change_frequency(self, control_pin, frequency):
+        control_pin.ChangeFrequency(frequency)
 
     def initialiseAxle(self, control_pin):
         control_pin.start(self.DUTY_CYCLE)
+        self.change_frequency(control_pin, 0)
         self.CURRENT_DIRECTION = "CENTER"
         print("SERVO INITIALISED, INSERT THE AXLE")
 
@@ -33,12 +37,12 @@ class RotateWheel:
             updater = 1
         else:
             updater = -1
-        
+        self.change_frequency(control_pin, 50)
         while self.DUTY_CYCLE != DIRECTION[direction]["DUTY_CYCLE"]:
-            print(self.DUTY_CYCLE)
             self.DUTY_CYCLE = round(self.DUTY_CYCLE + (DUTY_CYCLE_CHANGE_INTERVAL * updater), 1)
             control_pin.ChangeDutyCycle(self.DUTY_CYCLE)
             time.sleep(TURN_SPEED)
+        self.change_frequency(control_pin, 0)
         self.CURRENT_DIRECTION = direction
         print("TURN COMPLETE")
     
