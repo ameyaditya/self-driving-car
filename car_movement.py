@@ -2,8 +2,8 @@ import RPi.GPIO as g
 g.setmode(g.BOARD)
 m1_f = 18
 m1_b = 22
-m2_f = 15
-m2_b = 13
+m2_b = 15
+m2_f = 13
 g.setup(m1_f, g.OUT)
 g.setup(m1_b, g.OUT)
 g.setup(m2_f, g.OUT)
