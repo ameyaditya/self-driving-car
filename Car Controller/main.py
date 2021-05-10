@@ -7,6 +7,12 @@ from config import Config as c
 rpc = RaspberryPiController()
 
 app = Flask(__name__)
+CORS(app)
+cors = CORS(app, resource={
+    r"/*":{
+        "origins":"*"
+    }
+})
 
 def generate_response(data, status):
     return jsonify({
