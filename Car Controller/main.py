@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS, cross_origin
 
 from raspberry_pi_controller import RaspberryPiController
@@ -21,9 +21,8 @@ def generate_response(data, status):
     })
 
 @app.route("/")
-@cross_origin()
 def home_page():
-    return generate_response({"message": "Welcome to homepage"}, 200)
+    return render_template("index.html")
 
 @app.route("/api/v1/initialise_car_movement", methods=['POST'])
 @cross_origin()
@@ -86,6 +85,6 @@ def add_headers(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Expose-Headers', 'Content-Type,Content-Length,Authorization,X-Pagination')
     return response
-    
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
