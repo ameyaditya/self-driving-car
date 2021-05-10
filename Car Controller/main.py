@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, render_template
 from flask_cors import CORS, cross_origin
+import RPi.GPIO as GPIO
 
 from raspberry_pi_controller import RaspberryPiController
 from config import Config as c
+
+GPIO.setmode(GPIO.BOARD)
 
 rpc = RaspberryPiController()
 
