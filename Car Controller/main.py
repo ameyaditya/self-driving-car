@@ -27,7 +27,7 @@ def initialise_car_movement():
             return generate_response({"message": "CAR MOVEMENT INITIALISED"}, 200)
         raise Exception("RPI NOT INITIALISED")
     except Exception as e:
-        return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 @app.route("/api/v1/move_forward", methods=['POST'])
 @cross_origin()
@@ -38,7 +38,7 @@ def move_forward():
             return generate_response({"message": "CAR MOVING FORWARD"}, 200)
         raise Exception("RPI NOT INITIALISED")
     except Exception as e:
-        return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 @app.route("/api/v1/move_backward", methods=['POST'])
 @cross_origin()
@@ -49,7 +49,7 @@ def move_backward():
             return generate_response({"message": "CAR MOVING BACKWARD"}, 200)
         raise Exception("RPI NOT INITIALISED")
     except Exception as e:
-        return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 @app.route("/api/v1/stop", methods=['POST'])
 @cross_origin()
@@ -60,7 +60,7 @@ def stop():
             return generate_response({"message": "CAR STOPPED"}, 200)
         raise Exception("RPI NOT INITIALISED")
     except Exception as e:
-        return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 @app.route("/api/v1/kill_switch", methods=['POST'])
 @cross_origin()
@@ -69,7 +69,7 @@ def kill_switch():
         rpc.kill_switch()
         return generate_response({"message": "rASPBERRY PI KILLED"}, 200)
     except Exception as e:
-        return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 if __name__ == "__main__":
     app.run(debug=True)
