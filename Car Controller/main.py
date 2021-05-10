@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 from raspberry_pi_controller import RaspberryPiController
 from config import Config as c
@@ -7,7 +7,6 @@ from config import Config as c
 rpc = RaspberryPiController()
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
 
 def generate_response(data, status):
     return jsonify({
@@ -16,10 +15,12 @@ def generate_response(data, status):
     })
 
 @app.route("/")
+@cross_origin()
 def home_page():
     return generate_response({"message": "Welcome to homepage"}, 200)
 
 @app.route("/api/v1/initialise_car_movement", methods=['POST'])
+@cross_origin()
 def initialise_car_movement():
     try:
         res = rpc.initialise_car_movement(c.M1_F, c.M1_B, c.M2_F, c.M2_B)
@@ -30,6 +31,7 @@ def initialise_car_movement():
         return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
 
 @app.route("/api/v1/move_forward", methods=['POST'])
+@cross_origin()
 def move_forward():
     try:
         res = rpc.move_forward()
@@ -40,6 +42,7 @@ def move_forward():
         return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
 
 @app.route("/api/v1/move_backward", methods=['POST'])
+@cross_origin()
 def move_backward():
     try:
         res = rpc.move_backward()
@@ -50,6 +53,7 @@ def move_backward():
         return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
 
 @app.route("/api/v1/stop", methods=['POST'])
+@cross_origin()
 def stop():
     try:
         res = rpc.stop()
@@ -60,6 +64,7 @@ def stop():
         return generate_response({"message": "ERROR OCCURED", "error": e}, 500)
 
 @app.route("/api/v1/kill_switch", methods=['POST'])
+@cross_origin()
 def kill_switch():
     try:
         rpc.kill_switch()
