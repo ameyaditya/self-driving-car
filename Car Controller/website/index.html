@@ -6,14 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FYP Project</title>
+
     <!-- Jquery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
         integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
         crossorigin="anonymous"></script>
+
     <script>
         var CURRENT_CAR_STATUS = null;
         var CAR_INITIALISED = false;
-        var BASE_URL = "http://localhost:5000";
+        var BASE_URL = "http://192.168.1.18:5000";
 
         function initialise(){
             // TODO: make ajax call to do initial car setup
@@ -86,6 +88,9 @@
         }
 
         document.addEventListener("keydown", (e) => {
+            if(!CAR_INITIALISED)
+                return;
+
             switch(e.key){
                 case "ArrowUp":
                     move_forward();
@@ -99,6 +104,9 @@
         });
 
         document.addEventListener("keyup", (e) => {
+            if(!CAR_INITIALISED)
+                return;
+
             switch(e.key){
                 case "ArrowUp":
                 case "ArrowDown":
@@ -112,6 +120,9 @@
 </head>
 
 <body>
+    <button onclick="initialise()">INITIALISE</button>
+    <br>
+    <button onclick="kill_switch()">KILL SWITCH</button>
     <p>Use Arrow keys to move the car fordward and backward</p>
 </body>
 

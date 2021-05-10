@@ -1,10 +1,10 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-# from raspberry_pi_controller import RaspberryPiController
+from raspberry_pi_controller import RaspberryPiController
 from config import Config as c
 
-# rpc = RaspberryPiController()
+rpc = RaspberryPiController()
 
 app = Flask(__name__)
 CORS(app)
