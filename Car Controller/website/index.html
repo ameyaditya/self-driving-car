@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FYP Project</title>
+    <!-- Jquery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous"></script>
+    <script>
+        var CURRENT_CAR_STATUS = null;
+        var CAR_INITIALISED = false;
+        var BASE_URL = "http://localhost:5000";
+
+        function initialise(){
+            // TODO: make ajax call to do initial car setup
+            // on success update car initialised
+
+            $.post(`${BASE_URL}/api/v1/initialise_car_movement`, {}, (data) => {
+                CAR_INITIALISED = true;
+                CURRENT_CAR_STATUS = "STOP";
+                console.log("INITIALISE CALL SUCCESSFUL: ", data);
+            }, "json");
+        }
+
+        function move_forward(){
+            // TODO: Make AJAX call to move car forward
+            // on successful response, update CURRENT_CAR_STATUS
+
+            if(!CAR_INITIALISED)
+                return;
+            if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
+                return;
+
+            $.post(`${BASE_URL}/api/v1/move_forward`, {}, (data) => {
+                CURRENT_CAR_STATUS = "FORWARD";
+                console.log("MOVE FORWARD: ", data);
+            }, "json");
+        }
+
+        function move_backward(){
+            // TODO: Make AJAX call to move car backward
+            // on successful response, update CURRENT_CAR_STATUS
+
+            if(!CAR_INITIALISED)
+                return;
+            if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
+                return;
+
+            $.post(`${BASE_URL}/api/v1/move_backward`, {}, (data) => {
+                CURRENT_CAR_STATUS = "BACKWARD";
+                console.log("MOVE BACKWARD: ", data);
+            }, "json");
+        }
+
+        function stop_car(){
+            // TODO: Make AJAX call to move car backward
+            // on successful response, update CURRENT_CAR_STATUS
+
+            if(!CAR_INITIALISED)
+                return;
+            if(CURRENT_CAR_STATUS === "STOP")
+                return;
+            
+            $.post(`${BASE_URL}/api/v1/stop`, {}, (data) => {
+                CURRENT_CAR_STATUS = "STOP";
+                console.log("CAR STOP: ", data);
+            }, "json");
+        }
+
+        function kill_switch(){
+            // TODO: kill raspberry pi pins, 
+            // call GPIO.cleanup()
+
+            if(!CAR_INITIALISED)
+                return;
+            
+            $.post(`${BASE_URL}/api/v1/kill_switch`, {}, (data) => {
+                CURRENT_CAR_STATUS = null;
+                CAR_INITIALISED = false;
+                console.log("KILL SWITCH: ", data);
+            }, "json");
+        }
+
+        document.addEventListener("keydown", (e) => {
+            switch(e.key){
+                case "ArrowUp":
+                    move_forward();
+                    break;
+                case "ArrowDown":
+                    move_backward();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        document.addEventListener("keyup", (e) => {
+            switch(e.key){
+                case "ArrowUp":
+                case "ArrowDown":
+                    stop_car();
+                    break;
+                default:
+                    break;
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <p>Use Arrow keys to move the car fordward and backward</p>
+</body>
+
+</html>
