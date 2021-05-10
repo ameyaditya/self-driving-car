@@ -36,7 +36,7 @@
                 return;
             if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
                 return;
-
+            console.log(CURRENT_CAR_STATUS);
             $.post(`${BASE_URL}/api/v1/move_forward`, {}, (data) => {
                 CURRENT_CAR_STATUS = "FORWARD";
                 console.log("MOVE FORWARD: ", data);
