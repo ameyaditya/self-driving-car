@@ -15,13 +15,13 @@
     <script>
         var CURRENT_CAR_STATUS = null;
         var CAR_INITIALISED = false;
-        var BASE_URL = "http://192.168.1.18:5000";
+        var BASE_URL = "http://192.168.1.17:5000";
 
         function initialise(){
             // TODO: make ajax call to do initial car setup
             // on success update car initialised
 
-            $.post(`${BASE_URL}/api/v1/initialise_car_movement`, {}, (data) => {
+            $.get(`${BASE_URL}/api/v1/initialise_car_movement`, {}, (data) => {
                 CAR_INITIALISED = true;
                 CURRENT_CAR_STATUS = "STOP";
                 console.log("INITIALISE CALL SUCCESSFUL: ", data);
@@ -37,7 +37,7 @@
             if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
                 return;
 
-            $.post(`${BASE_URL}/api/v1/move_forward`, {}, (data) => {
+            $.get(`${BASE_URL}/api/v1/move_forward`, {}, (data) => {
                 CURRENT_CAR_STATUS = "FORWARD";
                 console.log("MOVE FORWARD: ", data);
             }, "json");
@@ -52,7 +52,7 @@
             if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
                 return;
 
-            $.post(`${BASE_URL}/api/v1/move_backward`, {}, (data) => {
+            $.get(`${BASE_URL}/api/v1/move_backward`, {}, (data) => {
                 CURRENT_CAR_STATUS = "BACKWARD";
                 console.log("MOVE BACKWARD: ", data);
             }, "json");
@@ -67,7 +67,7 @@
             if(CURRENT_CAR_STATUS === "STOP")
                 return;
             
-            $.post(`${BASE_URL}/api/v1/stop`, {}, (data) => {
+            $.get(`${BASE_URL}/api/v1/stop`, {}, (data) => {
                 CURRENT_CAR_STATUS = "STOP";
                 console.log("CAR STOP: ", data);
             }, "json");
@@ -80,7 +80,7 @@
             if(!CAR_INITIALISED)
                 return;
             
-            $.post(`${BASE_URL}/api/v1/kill_switch`, {}, (data) => {
+            $.get(`${BASE_URL}/api/v1/kill_switch`, {}, (data) => {
                 CURRENT_CAR_STATUS = null;
                 CAR_INITIALISED = false;
                 console.log("KILL SWITCH: ", data);
