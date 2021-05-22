@@ -18,10 +18,11 @@ def generate_response(data, status):
     })
 
 @app.route("/")
+@cross_origin()
 def home_page():
     return render_template("index.html")
 
-@app.route("/api/v1/initialise_car_movement", methods=['POST'])
+@app.route("/api/v1/initialise_car_movement")
 @cross_origin()
 def initialise_car_movement():
     try:
@@ -32,7 +33,7 @@ def initialise_car_movement():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/v1/move_forward", methods=['POST'])
+@app.route("/api/v1/move_forward")
 @cross_origin()
 def move_forward():
     try:
@@ -43,7 +44,7 @@ def move_forward():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/v1/move_backward", methods=['POST'])
+@app.route("/api/v1/move_backward")
 @cross_origin()
 def move_backward():
     try:
@@ -54,7 +55,7 @@ def move_backward():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/v1/stop", methods=['POST'])
+@app.route("/api/v1/stop")
 @cross_origin()
 def stop():
     try:
@@ -65,7 +66,7 @@ def stop():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/v1/kill_switch", methods=['POST'])
+@app.route("/api/v1/kill_switch")
 @cross_origin()
 def kill_switch():
     try:
