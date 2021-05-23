@@ -3,7 +3,7 @@ from config import Config as c
 
 
 class CarRotation:
-    def __init__(self servo_pin):
+    def __init__(self, servo_pin):
         self.DUTY_CYCLE = c.INITIAL_DUTY_CYCLE
         self.MINIMUM_DUTY_CYCLE = c.MINIMUM_DUTY_CYCLE
         self.MAXIMUM_DUTY_CYCLE = c.MAXIMUM_DUTY_CYCLE
