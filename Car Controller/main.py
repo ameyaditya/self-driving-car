@@ -26,7 +26,7 @@ def home_page():
 @cross_origin()
 def initialise_car_movement():
     try:
-        res = rpc.initialise_car_movement(c.M1_F, c.M1_B, c.M2_F, c.M2_B)
+        res = rpc.initialise_car_movement(c.M1_F, c.M1_B, c.M2_F, c.M2_B, c.SERVO_PIN)
         if res:
             return generate_response({"message": "CAR MOVEMENT INITIALISED"}, 200)
         raise Exception("RPI NOT INITIALISED")
