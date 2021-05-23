@@ -1,5 +1,27 @@
 class Config:
+    #PINS
+
+    #MOVEMENT PINS
     M1_F = 18
     M1_B = 22
     M2_F = 13
     M2_B = 15
+
+    #ROTATION PINS
+    SERVO_PIN = 16
+
+    INITIAL_DUTY_CYCLE = 7.4
+    MINIMUM_DUTY_CYCLE = 6.4
+    MAXIMUM_DUTY_CYCLE = 8.4
+
+    DUTY_CYCLE_CHANGE_INTERVAL = 0.05
+    TURN_SPEED = 0.1
+    SERVO_FREQUENCY = 50
+
+    DIRECTION = {
+    "FULL_LEFT": {"DUTY_CYCLE": 6.4},
+    "HALF_LEFT": {"DUTY_CYCLE": 6.8},
+    "CENTER": {"DUTY_CYCLE": 7.4},
+    "HALF_RIGHT": {"DUTY_CYCLE": 8.0},
+    "FULL_RIGHT": {"DUTY_CYCLE": 8.4}
+    }

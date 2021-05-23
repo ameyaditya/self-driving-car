@@ -55,6 +55,28 @@ def move_backward():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
+@app.route("/api/v1/move_right")
+@cross_origin()
+def turn_right():
+    try:
+        res = rpc.turn_right()
+        if res:
+            return generate_response({"message": "CAR TURNING RIGHT"}, 200)
+        raise Exception("RPI NOT INITIALISED")
+    except Exception as e:
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
+
+@app.route("/api/v1/turn_left")
+@cross_origin()
+def turn_left():
+    try:
+        res = rpc.turn_left()
+        if res:
+            return generate_response({"message": "CAR TURNING LEFT"}, 200)
+
+    except Exception as e:
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
+
 @app.route("/api/v1/stop")
 @cross_origin()
 def stop():

@@ -14,27 +14,29 @@
 
     <script>
         var CURRENT_CAR_STATUS = null;
+        var CAR_ROTATION_IN_PROGRESS = null;
         var CAR_INITIALISED = false;
         var BASE_URL = "http://192.168.1.17:5000";
 
-        function initialise(){
+        function initialise() {
             // TODO: make ajax call to do initial car setup
             // on success update car initialised
 
             $.get(`${BASE_URL}/api/v1/initialise_car_movement`, {}, (data) => {
-                CAR_INITIALISED = true;
                 CURRENT_CAR_STATUS = "STOP";
+                CAR_ROTATION_IN_PROGRESS = false;
+                CAR_INITIALISED = true;
                 console.log("INITIALISE CALL SUCCESSFUL: ", data);
             }, "json");
         }
 
-        function move_forward(){
+        function move_forward() {
             // TODO: Make AJAX call to move car forward
             // on successful response, update CURRENT_CAR_STATUS
 
-            if(!CAR_INITIALISED)
+            if (!CAR_INITIALISED)
                 return;
-            if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
+            if (CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
                 return;
 
             $.get(`${BASE_URL}/api/v1/move_forward`, {}, (data) => {
@@ -43,13 +45,13 @@
             }, "json");
         }
 
-        function move_backward(){
+        function move_backward() {
             // TODO: Make AJAX call to move car backward
             // on successful response, update CURRENT_CAR_STATUS
 
-            if(!CAR_INITIALISED)
+            if (!CAR_INITIALISED)
                 return;
-            if(CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
+            if (CURRENT_CAR_STATUS === "FORWARD" || CURRENT_CAR_STATUS === "BACKWARD")
                 return;
 
             $.get(`${BASE_URL}/api/v1/move_backward`, {}, (data) => {
@@ -58,28 +60,52 @@
             }, "json");
         }
 
-        function stop_car(){
+        function turn_right() {
+            if (!CAR_INITIALISED)
+                return;
+            if (CAR_ROTATION_IN_PROGRESS)
+                return;
+            CAR_ROTATION_IN_PROGRESS = true;
+            $.get(`${BASE_URL}/api/v1/turn_right`, {}, (data) => {
+                CAR_ROTATION_IN_PROGRESS = false;
+                console.log("TURN RIGHT: ", data);
+            }, "json")
+        }
+
+        function turn_left() {
+            if (!CAR_INITIALISED)
+                return;
+            if (CAR_ROTATION_IN_PROGRESS)
+                return;
+            CAR_ROTATION_IN_PROGRESS = true;
+            $.get(`${BASE_URL}/api/v1/turn_left`, {}, (data) => {
+                CAR_ROTATION_IN_PROGRESS = false;
+                console.log("TURN LEFT: ", data);
+            }, "json")
+        }
+
+        function stop_car() {
             // TODO: Make AJAX call to move car backward
             // on successful response, update CURRENT_CAR_STATUS
 
-            if(!CAR_INITIALISED)
+            if (!CAR_INITIALISED)
                 return;
-            if(CURRENT_CAR_STATUS === "STOP")
+            if (CURRENT_CAR_STATUS === "STOP")
                 return;
-            
+
             $.get(`${BASE_URL}/api/v1/stop`, {}, (data) => {
                 CURRENT_CAR_STATUS = "STOP";
                 console.log("CAR STOP: ", data);
             }, "json");
         }
 
-        function kill_switch(){
+        function kill_switch() {
             // TODO: kill raspberry pi pins, 
             // call GPIO.cleanup()
 
-            if(!CAR_INITIALISED)
+            if (!CAR_INITIALISED)
                 return;
-            
+
             $.get(`${BASE_URL}/api/v1/kill_switch`, {}, (data) => {
                 CURRENT_CAR_STATUS = null;
                 CAR_INITIALISED = false;
@@ -88,15 +114,21 @@
         }
 
         document.addEventListener("keydown", (e) => {
-            if(!CAR_INITIALISED)
+            if (!CAR_INITIALISED)
                 return;
 
-            switch(e.key){
+            switch (e.key) {
                 case "ArrowUp":
                     move_forward();
                     break;
                 case "ArrowDown":
                     move_backward();
+                    break;
+                case "ArrowRight":
+                    turn_right();
+                    break;
+                case "ArrowLeft":
+                    turn_left();
                     break;
                 default:
                     break;
@@ -104,10 +136,10 @@
         });
 
         document.addEventListener("keyup", (e) => {
-            if(!CAR_INITIALISED)
+            if (!CAR_INITIALISED)
                 return;
 
-            switch(e.key){
+            switch (e.key) {
                 case "ArrowUp":
                 case "ArrowDown":
                     stop_car();
