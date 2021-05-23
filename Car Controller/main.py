@@ -55,7 +55,7 @@ def move_backward():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/v1/move_right")
+@app.route("/api/v1/turn_right")
 @cross_origin()
 def turn_right():
     try:
