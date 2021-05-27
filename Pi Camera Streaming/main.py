@@ -9,6 +9,7 @@ from picamera import PiCamera
 import cv2
 
 camera = PiCamera()
+camera.resolution = (720, 480)
 rawCapture = PiRGBArray(camera)
 print("INITIALISED THE CAMERA")
 
