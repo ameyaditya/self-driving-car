@@ -12,10 +12,10 @@ camera = PiCamera()
 camera.resolution = (736, 480)
 camera.framerate = 10
 rawCapture = PiRGBArray(camera, size=(736,480))
+camera.capture(rawCapture, format="bgr")
 print("INITIALISED THE CAMERA")
 
 def get_frame():
-    camera.capture(rawCapture, format="bgr")
     image = rawCapture.array
     ret, jpeg = cv2.imencode('.jpg', image)
     return jpeg.tobytes()
