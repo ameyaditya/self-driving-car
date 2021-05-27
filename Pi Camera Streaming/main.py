@@ -15,7 +15,7 @@ print("INITIALISED THE CAMERA")
 def get_frame():
     camera.capture(rawCapture, format="bgr")
     image = rawCapture.array
-    ret, jpeg = cv2.imencode('.jpg', frame)
+    ret, jpeg = cv2.imencode('.jpg', image)
     return jpeg.tobytes()
 
 # pi_camera = VideoCamera(flip=False)
