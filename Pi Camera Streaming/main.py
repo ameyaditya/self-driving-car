@@ -4,7 +4,19 @@ import time
 import threading
 import os
 
-from camera_frames import get_frame
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+import cv2
+
+camera = PiCamera()
+rawCapture = PiRGBArray(camera)
+print("INITIALISED THE CAMERA")
+
+def get_frame():
+    camera.capture(rawCapture, format="bgr")
+    image = rawCapture.array
+    ret, jpeg = cv2.imencode('.jpg', frame)
+    return jpeg.tobytes()
 
 # pi_camera = VideoCamera(flip=False)
 
@@ -13,6 +25,7 @@ CORS(app)
 
 def gen():
     while True:
+        print("GETTING A FRAME")
         frame = get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -25,4 +38,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001)
