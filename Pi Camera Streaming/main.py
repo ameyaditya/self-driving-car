@@ -1,6 +1,5 @@
 from flask import Flask, render_template, Response, request
 from flask_cors import CORS
-from camera import VideoCamera
 import time
 import threading
 import os
@@ -26,4 +25,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
