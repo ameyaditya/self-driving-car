@@ -10,7 +10,8 @@ import cv2
 
 camera = PiCamera()
 camera.resolution = (736, 480)
-rawCapture = PiRGBArray(camera)
+camera.framerate = 10
+rawCapture = PiRGBArray(camera, size=(736,480))
 print("INITIALISED THE CAMERA")
 
 def get_frame():
