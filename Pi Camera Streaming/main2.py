@@ -12,7 +12,7 @@ vc = cv2.VideoCapture(0)
 def gen():
     while True:
         rval, frame = vc.read()
-        success, encoded_image = cv2.imencode('.jpg', image)
+        success, encoded_image = cv2.imencode('.jpg', frame)
         bytes_image = encoded_image.tobytes()
         cv2.imwrite('pic.jpg', frame)
         image = open('pic.jpg', 'rb').read()
