@@ -12,10 +12,13 @@ vc = cv2.VideoCapture(0)
 def gen():
     while True:
         rval, frame = vc.read()
+        print(type(frame))
         cv2.imwrite('pic.jpg', frame)
+        image = open('pic.jpg', 'rb').read()
+        print(type(image))
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' +
-               open('pic.jpg', 'rb').read()
+               image
                + b'\r\n')
 
 
