@@ -27,7 +27,7 @@ def video_feed():
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_feed_2') 
-def video_feed(): 
+def video_feed_2(): 
    return Response(gen(), 
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
