@@ -13,12 +13,13 @@ vc = cv2.VideoCapture(0)
 def gen():
     while True:
         rval, frame = vc.read()
-        success, frame = cv2.imencode('.jpg', frame)
-        frame = frame.tobytes()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' +
-               frame
-               + b'\r\n')
+        if rval:
+            success, frame = cv2.imencode('.jpg', frame)
+            frame = frame.tobytes()
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' +
+                frame
+                + b'\r\n')
 
 
 @app.route('/video_feed') 
