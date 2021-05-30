@@ -7,22 +7,26 @@ import io
 
 app = Flask(__name__)
 CORS(app)
+
 vc = cv2.VideoCapture(0)
 
 def gen():
     while True:
         rval, frame = vc.read()
-        success, encoded_image = cv2.imencode('.jpg', frame)
-        bytes_image = encoded_image.tobytes()
-        cv2.imwrite('pic.jpg', frame)
-        image = open('pic.jpg', 'rb').read()
+        success, frame = cv2.imencode('.jpg', frame)
+        frame = frame.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' +
-               bytes_image
+               frame
                + b'\r\n')
 
 
 @app.route('/video_feed') 
+def video_feed(): 
+   return Response(gen(), 
+                   mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed_2') 
 def video_feed(): 
    return Response(gen(), 
                    mimetype='multipart/x-mixed-replace; boundary=frame')
