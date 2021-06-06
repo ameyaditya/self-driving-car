@@ -2,6 +2,9 @@ from flask import Flask, jsonify, render_template
 from flask_cors import CORS, cross_origin
 import RPi.GPIO as GPIO
 
+import picamera
+import cv2
+
 from raspberry_pi_controller import RaspberryPiController
 from config import Config as c
 
@@ -11,11 +14,30 @@ rpc = RaspberryPiController()
 
 app = Flask(__name__)
 
+vc = cv2.VideoCapture(0)
+
+def gen():
+    while True:
+        rval, frame = vc.read()
+        if rval:
+            success, frame = cv2.imencode('.jpg', frame)
+            frame = frame.tobytes()
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' +
+                frame
+                + b'\r\n')
+
 def generate_response(data, status):
     return jsonify({
         "status": status,
         "data": data
     })
+
+@app.route('/video_feed')
+@cross_origin()
+def video_feed(): 
+    return Response(gen(), 
+        mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route("/")
 @cross_origin()
