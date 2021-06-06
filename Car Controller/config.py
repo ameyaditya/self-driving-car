@@ -2,13 +2,13 @@ class Config:
     #PINS
 
     #MOVEMENT PINS
-    M1_F = 18
-    M1_B = 22
-    M2_F = 13
+    M1_F = 16
+    M1_B = 18
+    M2_F = 22
     M2_B = 15
 
     #ROTATION PINS
-    SERVO_PIN = 16
+    SERVO_PIN = 13
 
     INITIAL_DUTY_CYCLE = 7.4
     MINIMUM_DUTY_CYCLE = 6.4

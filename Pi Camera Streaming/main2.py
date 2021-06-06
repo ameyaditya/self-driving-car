@@ -27,10 +27,5 @@ def video_feed():
    return Response(gen(), 
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/video_feed_2') 
-def video_feed_2(): 
-   return Response(gen(), 
-                   mimetype='multipart/x-mixed-replace; boundary=frame')
-
 if __name__ == '__main__': 
 	app.run(host='0.0.0.0', port=5001, threaded=True) 
