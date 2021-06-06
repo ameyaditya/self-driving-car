@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, Response
 from flask_cors import CORS, cross_origin
 import RPi.GPIO as GPIO
 
