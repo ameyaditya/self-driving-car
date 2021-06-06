@@ -3,7 +3,7 @@ from car_rotation import RotateWheel
 
 rw = RotateWheel()
 
-servo_pin = 16
+servo_pin = 13
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(servo_pin,GPIO.OUT)
 
