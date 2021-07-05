@@ -17,8 +17,8 @@ class RaspberryPiController:
         self.car_movement.initialise()
         print("CAR MOVEMENT INITIALISED")
 
-        # self.car_rotation = CarRotation(servo_pin)
-        # self.car_rotation.initialise()
+        self.car_rotation = CarRotation(servo_pin)
+        self.car_rotation.initialise()
         print("CAR ROTATION INITIALISED")
         print("MOUNT AXLE")
         return True
