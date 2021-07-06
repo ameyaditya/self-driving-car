@@ -122,7 +122,7 @@ def kill_switch():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/vi/distance")
+@app.route("/api/v1/distance")
 @cross_origin()
 def distance():
     try:
