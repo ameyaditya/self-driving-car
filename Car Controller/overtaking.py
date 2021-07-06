@@ -4,7 +4,7 @@ threshold = 30
 turn_time = 1
 overtake_time=5
 while True:
-    distance = requests.get("/api/vi/distance")
+    distance = requests.get("/api/v1/distance")
 
     if distance <=30:
         cr.turn_full_right()
