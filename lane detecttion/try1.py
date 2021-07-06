@@ -5,8 +5,8 @@ from sklearn.cluster import KMeans
 
 
 img = cv2.imread("test1.jpg")
-
-
+colors = [(0,0,255), (255,0,0), (0,255,0), (0,255,255), (255,0,255), (255,255,0), (0,0,0)]
+counter = 0
 def canny_edge_detector(image):
       
     # Convert the image color to grayscale
@@ -22,7 +22,7 @@ def region_of_interest(image):
     height = image.shape[0]
     width = image.shape[1]
     polygons = np.array([
-        [0, height // 2], [width, height // 2],[width, height], [0, height]
+        [0, height // 3], [width, height // 3],[width, height], [0, height]
         ])
     mask = np.zeros_like(image)
       
@@ -52,6 +52,9 @@ def average_slope_intercept(image, lines):
         parameters = np.polyfit((x1, x2), (y1, y2), 1) 
         slope = parameters[0]
         intercept = parameters[1]
+        if abs(slope) > 0.7:
+            continue
+        print(" SLOPE: ", slope, (x1, y1, x2, y2))
         fits.append([slope, intercept])
         if slope < 0:
             left_fit.append((slope, intercept))
@@ -91,7 +94,9 @@ lines = cv2.HoughLinesP(cropped_image, 1, np.pi / 180, 50,
 temp_img = img.copy()
 for i in lines:
     a,b,c,d = i[0]
-    cv2.line(temp_img, (a,b), (c,d), (0,0,255), 3, cv2.LINE_AA)
+    print(i[0], colors[counter])
+    cv2.line(temp_img, (a,b), (c,d), colors[counter], 3, cv2.LINE_AA)
+    counter = (counter + 1) % len(colors)
 
 cv2.imshow("TEMP IMAGE", temp_img)
 averaged_lines = average_slope_intercept(frame, lines) 

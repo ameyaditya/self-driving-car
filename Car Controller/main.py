@@ -21,7 +21,7 @@ def gen():
     while True:
         rval, frame = vc.read()
         if rval:
-            cv2.imwrite(f"images/{int(time.time())}.jpg", frame)
+            # cv2.imwrite(f"images/{int(time.time())}.jpg", frame)
             success, frame = cv2.imencode('.jpg', frame)
             frame = frame.tobytes()
             yield (b'--frame\r\n'
