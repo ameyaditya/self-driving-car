@@ -75,7 +75,7 @@ class CarRotation:
     def turn_left(self):
         # if self.DUTY_CYCLE == self.MINIMUM_DUTY_CYCLE:
         #     return
-        self.PWM.set_servo_pulsewidth(self.SERVO_PIN, 2500)
+        self.PWM.set_servo_pulsewidth(self.SERVO_PIN, 500)
         time.sleep(3)
         # self.DUTY_CYCLE = round(
         #     self.DUTY_CYCLE - (c.DUTY_CYCLE_CHANGE_INTERVAL), 2)
