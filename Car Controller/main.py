@@ -122,14 +122,14 @@ def kill_switch():
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
-@app.route("/api/vi/distance")
-@cross_origin()
-def distance():
-    try:
-        return generate_response({"distance": rpc.get_distance()}, 200)
+# @app.route("/api/vi/distance")
+# @cross_origin()
+# def distance():
+#     try:
+#         return generate_response({"distance": rpc.get_distance()}, 200)
         
-    except Exception as e:
-        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
+#     except Exception as e:
+#         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
