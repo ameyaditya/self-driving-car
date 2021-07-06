@@ -10,10 +10,10 @@ class CarRotation:
         self.SERVO_FREQUENCY = c.SERVO_FREQUENCY
         self.SERVO_PIN = servo_pin
         self.CURRENT_DIRECTION = None
-
-    def initialise(self):
         GPIO.setup(self.SERVO_PIN, GPIO.OUT)
         self.CONTROL_PIN = GPIO.PWM(self.SERVO_PIN, self.SERVO_FREQUENCY)
+
+    def initialise(self):
         self.CONTROL_PIN.start(self.DUTY_CYCLE)
         self.CURRENT_DIRECTION = "CENTER"
 
