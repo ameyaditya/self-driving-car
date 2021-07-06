@@ -25,6 +25,8 @@ class RaspberryPiController:
 
         self.car_distance = Ultrasonic(trigger_pin, echo_pin)
         self.car_distance.initialise()
+        print("ULTRASONIC SENSOR INITIALISED")
+        
         return True
     
     def move_forward(self):

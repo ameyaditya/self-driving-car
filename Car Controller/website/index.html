@@ -167,9 +167,10 @@
 
         setInterval(() => {
             $.get(`${BASE_URL}/api/v1/distance`, {}, (data) => {
+                console.log("GOT DISTANCE", data);
                 $("#distance").html(data.data.distance)
             }, "json");
-        }, 500)
+        }, 5000)
     </script>
 </head>
 
