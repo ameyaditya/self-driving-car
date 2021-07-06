@@ -21,8 +21,7 @@ class CarRotation:
         time.sleep(0.2)
         self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
         time.sleep(0.2)
-        self.CONTROL_PIN.ChangeFrequency(0)
-        print("CHANGIN FREQUENCY")
+        self.CONTROL_PIN.stop()
         self.CURRENT_DIRECTION = "CENTER"
 
     def turn(self, direction):
