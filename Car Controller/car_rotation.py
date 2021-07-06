@@ -7,44 +7,39 @@ from config import Config as c
 
 class CarRotation:
     def __init__(self, servo_pin):
-        self.DUTY_CYCLE = c.INITIAL_DUTY_CYCLE
-        self.MINIMUM_DUTY_CYCLE = c.MINIMUM_DUTY_CYCLE
-        self.MAXIMUM_DUTY_CYCLE = c.MAXIMUM_DUTY_CYCLE
+        self.PULSE_WIDTH = c.INITIAL_PULSE_WIDTH
+        self.MINIMUM_PULSE_WIDTH = c.MINIMUM_PULSE_WIDTH
+        self.MAXIMUM_PULSE_WIDTH = c.MAXIMUM_PULSE_WIDTH
         self.SERVO_FREQUENCY = c.SERVO_FREQUENCY
         self.SERVO_PIN = servo_pin
         self.CURRENT_DIRECTION = None
-        # GPIO.setup(self.SERVO_PIN, GPIO.OUT)
         self.PWM = pigpio.pi()
         self.PWM.set_mode(self.SERVO_PIN, pigpio.OUTPUT)
         self.PWM.set_PWM_frequency(self.SERVO_PIN, self.SERVO_FREQUENCY)
         time.sleep(3)
-        # self.CONTROL_PIN = GPIO.PWM(self.SERVO_PIN, self.SERVO_FREQUENCY)
 
     def initialise(self):
-        # self.CONTROL_PIN.start(self.DUTY_CYCLE)
-        # self.CONTROL_PIN.start(0)
-        # time.sleep(0.2)
-        # self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
-        self.PWM.set_servo_pulsewidth(self.SERVO_PIN, 1500)
+        self.PWM.set_servo_pulsewidth(self.SERVO_PIN, c.INITIAL_PULSE_WIDTH)
         time.sleep(0.2)
-        # self.CONTROL_PIN.stop()
         self.CURRENT_DIRECTION = "CENTER"
 
     def turn(self, direction):
         if direction == self.CURRENT_DIRECTION:
             return
+        self.CONTROL_PIN.start(0)
         updater = 0
-        if self.DUTY_CYCLE < c.DIRECTION[direction]["DUTY_CYCLE"]:
+        if self.PULSE_WIDTH < c.DIRECTION[direction]["PULSE_WIDTH"]:
             updater = 1
         else:
             updater = -1
 
-        while self.DUTY_CYCLE != c.DIRECTION[direction]["DUTY_CYCLE"]:
-            self.DUTY_CYCLE = round(
-                self.DUTY_CYCLE + (c.DUTY_CYCLE_CHANGE_INTERVAL * updater), 2)
-            self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
+        while self.PULSE_WIDTH != c.DIRECTION[direction]["PULSE_WIDTH"]:
+            self.PULSE_WIDTH = self.PULSE_WIDTH + \
+                (c.PULSE_WIDTH_CHANGE_INTERVAL * updater)
+            self.PWM.set_servo_pulsewidth(self.SERVO_PIN, self.PULSE_WIDTH)
             time.sleep(c.TURN_SPEED)
         self.CURRENT_DIRECTION = direction
+        self.CONTROL_PIN.stop()
 
     def turn_full_right(self):
         self.turn("FULL_RIGHT")
@@ -62,19 +57,17 @@ class CarRotation:
         self.turn("FULL_LEFT")
 
     def turn_right(self):
-        # if self.DUTY_CYCLE == self.MAXIMUM_DUTY_CYCLE:
-        #     return
-        self.PWM.set_servo_pulsewidth(self.SERVO_PIN, 2500)
-        time.sleep(3)
-        # self.DUTY_CYCLE = round(
-        #     self.DUTY_CYCLE + (c.DUTY_CYCLE_CHANGE_INTERVAL), 2)
-        # self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
+        if self.PULSE_WIDTH == self.MAXIMUM_PULSE_WIDTH:
+            return
+        self.PULSE_WIDTH = self.PULSE_WIDTH + c.PULSE_WIDTH_CHANGE_INTERVAL
+        self.PWM.set_servo_pulsewidth(
+            self.SERVO_PIN, self.PULSE_WIDTH)
+        time.sleep(c.TURN_SPEED)
 
     def turn_left(self):
-        # if self.DUTY_CYCLE == self.MINIMUM_DUTY_CYCLE:
-        #     return
-        self.PWM.set_servo_pulsewidth(self.SERVO_PIN, 500)
-        time.sleep(3)
-        # self.DUTY_CYCLE = round(
-        #     self.DUTY_CYCLE - (c.DUTY_CYCLE_CHANGE_INTERVAL), 2)
-        # self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
+        if self.PULSE_WIDTH == self.MINIMUM_PULSE_WIDTH:
+            return
+        self.PULSE_WIDTH = self.PULSE_WIDTH - c.PULSE_WIDTH_CHANGE_INTERVAL
+        self.PWM.set_servo_pulsewidth(
+            self.SERVO_PIN, self.PULSE_WIDTH)
+        time.sleep(c.TURN_SPEED)
