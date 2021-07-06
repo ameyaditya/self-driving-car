@@ -11,10 +11,7 @@ M1_CONTROLLER = GPIO.PWM(M1_F, 100)
 M1_CONTROLLER.start(0)
 time.sleep(1)
 
-M1_CONTROLLER.ChangeDutyCycle(10)
-time.sleep(5)
-
-M1_CONTROLLER.ChangeDutyCycle(0)
+M1_CONTROLLER.ChangeDutyCycle(30)
 time.sleep(5)
 
 M1_CONTROLLER.ChangeDutyCycle(100)
