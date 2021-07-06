@@ -55,6 +55,7 @@ def initialise_car_movement():
             return generate_response({"message": "CAR MOVEMENT INITIALISED"}, 200)
         raise Exception("RPI NOT INITIALISED")
     except Exception as e:
+        print("ERROR", e)
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
 @app.route("/api/v1/move_forward")
