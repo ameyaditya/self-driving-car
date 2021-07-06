@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-SERVO_PIN = 13
+SERVO_PIN = 33
 SERVO_FREQUENCY = 50
 DUTY_CYCLE = 6
 
