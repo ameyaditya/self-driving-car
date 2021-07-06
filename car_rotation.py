@@ -29,7 +29,7 @@ class RotateWheel:
     def turn(self, direction, control_pin):
         if direction == self.CURRENT_DIRECTION:
             return
-
+        self.CONTROL_PIN.start(0)
         updater = 0
         if self.DUTY_CYCLE < DIRECTION[direction]["DUTY_CYCLE"]:
             updater = 1
@@ -41,6 +41,7 @@ class RotateWheel:
             control_pin.ChangeDutyCycle(self.DUTY_CYCLE)
             time.sleep(TURN_SPEED)
         self.CURRENT_DIRECTION = direction
+        self.CONTROL_PIN.stop()
         print("TURN COMPLETE")
 
     def turn_full_right(self, control_pin):
