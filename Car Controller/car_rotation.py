@@ -27,7 +27,7 @@ class CarRotation:
     def turn(self, direction):
         if direction == self.CURRENT_DIRECTION:
             return
-
+        self.CONTROL_PIN.start(0)
         updater = 0
         if self.DUTY_CYCLE < c.DIRECTION[direction]["DUTY_CYCLE"]:
             updater = 1
@@ -40,6 +40,7 @@ class CarRotation:
             self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
             time.sleep(c.TURN_SPEED)
         self.CURRENT_DIRECTION = direction
+        self.CONTROL_PIN.stop()
 
     def turn_full_right(self):
         self.turn("FULL_RIGHT")
