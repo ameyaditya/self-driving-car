@@ -8,7 +8,7 @@ class Config:
     M2_B = 15
 
     #ROTATION PINS
-    SERVO_PIN = 33
+    SERVO_PIN = 13
 
     INITIAL_DUTY_CYCLE = 9.0
     MINIMUM_DUTY_CYCLE = 10.0
