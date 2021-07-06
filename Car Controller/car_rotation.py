@@ -1,4 +1,6 @@
 import RPi.GPIO as GPIO
+import time
+
 from config import Config as c
 
 
@@ -14,7 +16,10 @@ class CarRotation:
         self.CONTROL_PIN = GPIO.PWM(self.SERVO_PIN, self.SERVO_FREQUENCY)
 
     def initialise(self):
-        self.CONTROL_PIN.start(self.DUTY_CYCLE)
+        # self.CONTROL_PIN.start(self.DUTY_CYCLE)
+        self.CONTROL_PIN.start(0)
+        time.sleep(0.2)
+        self.CONTROL_PIN.ChangeDutyCycle(self.DUTY_CYCLE)
         self.CURRENT_DIRECTION = "CENTER"
 
     def turn(self, direction):
