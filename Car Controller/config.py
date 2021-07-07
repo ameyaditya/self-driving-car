@@ -22,6 +22,10 @@ class Config:
     TURN_SPEED = 0.1
     SERVO_FREQUENCY = 50
 
+   # ULTRASONIC CONFIG
+    TRIGGER_PIN = 29
+    ECHO_PIN = 31
+
     DIRECTION = {
     "FULL_LEFT": {"DUTY_CYCLE": 8.0},
     "HALF_LEFT": {"DUTY_CYCLE": 8.4},

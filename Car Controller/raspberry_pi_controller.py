@@ -3,13 +3,14 @@ import time
 
 from car_movement import CarMovement
 from car_rotation import CarRotation
+from ultrasonic import Ultrasonic
 
 class RaspberryPiController:
     def __init__(self):
         self.RPI_INITIALISED = True
         print("INITIALISING RASPBERRY PI")
     
-    def initialise_car_movement(self, m1_f, m1_b, m2_f, m2_b, servo_pin):
+    def initialise_car_movement(self, m1_f, m1_b, m2_f, m2_b, servo_pin, trigger_pin, echo_pin):
         if not self.RPI_INITIALISED:
             return False
         
@@ -21,6 +22,11 @@ class RaspberryPiController:
         self.car_rotation.initialise()
         print("CAR ROTATION INITIALISED")
         print("MOUNT AXLE")
+
+        self.car_distance = Ultrasonic(trigger_pin, echo_pin)
+        self.car_distance.initialise()
+        print("ULTRASONIC SENSOR INITIALISED")
+        
         return True
     
     def move_forward(self):
@@ -56,5 +62,8 @@ class RaspberryPiController:
     def kill_switch(self):
         self.RPI_INITIALISED = False
         GPIO.cleanup()
+    
+    def get_distance(self):
+        return self.car_distance.get_distance()
 
 

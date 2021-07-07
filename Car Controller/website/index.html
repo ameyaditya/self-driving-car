@@ -8,26 +8,23 @@
     <title>FYP Project</title>
 
     <!-- Jquery CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
-        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
     <style>
-        .camera-heading{
+        .camera-heading {
             text-align: center;
         }
-
-        .camera-container{
+        
+        .camera-container {
             margin-left: auto;
             margin-right: auto;
             margin-top: 30px;
-
             width: 640px;
             height: 480px;
         }
-
-        .streaming-image-container{
-            width: 100%; 
-            height:100%; 
+        
+        .streaming-image-container {
+            width: 100%;
+            height: 100%;
             background-attachment: fixed;
         }
     </style>
@@ -167,6 +164,13 @@
                     break;
             }
         });
+
+        setInterval(() => {
+            $.get(`${BASE_URL}/api/v1/distance`, {}, (data) => {
+                console.log("GOT DISTANCE", data);
+                $("#distance").html(data.data.distance)
+            }, "json");
+        }, 5000)
     </script>
 </head>
 
@@ -175,6 +179,8 @@
     <br>
     <button onclick="kill_switch()">KILL SWITCH</button>
     <p>Use Arrow keys to move the car fordward and backward</p>
+    <div id="distance"></div>
+
     <h1 class="camera-heading">MAIN CAMERA</h1>
     <div class="camera-container">
         <img id="streaming-image-container">
@@ -183,4 +189,5 @@
 <script>
     document.getElementById("streaming-image-container").src = `${BASE_URL}/video_feed`;
 </script>
+
 </html>

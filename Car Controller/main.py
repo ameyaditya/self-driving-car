@@ -21,7 +21,7 @@ def gen():
     while True:
         rval, frame = vc.read()
         if rval:
-            # cv2.imwrite(f"images/{int(time.time())}.jpg", frame)
+            cv2.imwrite(f"images/{int(time.time())}.jpg", frame)
             success, frame = cv2.imencode('.jpg', frame)
             frame = frame.tobytes()
             yield (b'--frame\r\n'
@@ -56,7 +56,7 @@ def home_page():
 @cross_origin()
 def initialise_car_movement():
     try:
-        res = rpc.initialise_car_movement(c.M1_F, c.M1_B, c.M2_F, c.M2_B, c.SERVO_PIN)
+        res = rpc.initialise_car_movement(c.M1_F, c.M1_B, c.M2_F, c.M2_B, c.SERVO_PIN, c.TRIGGER_PIN, c.ECHO_PIN)
         if res:
             return generate_response({"message": "CAR MOVEMENT INITIALISED"}, 200)
         raise Exception("RPI NOT INITIALISED")
@@ -124,7 +124,16 @@ def stop():
 def kill_switch():
     try:
         rpc.kill_switch()
-        return generate_response({"message": "rASPBERRY PI KILLED"}, 200)
+        return generate_response({"message": "RASPBERRY PI KILLED"}, 200)
+    except Exception as e:
+        return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
+
+@app.route("/api/v1/distance")
+@cross_origin()
+def distance():
+    try:
+        return generate_response({"distance": rpc.get_distance()}, 200)
+        
     except Exception as e:
         return generate_response({"message": "ERROR OCCURED", "error": str(e)}, 500)
 
