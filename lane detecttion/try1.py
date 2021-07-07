@@ -41,19 +41,20 @@ def create_coordinates(image, line_parameters):
     x2 = int((y2 - intercept) / slope)
     return np.array([x1, y1, x2, y2])
 
-def average_slope_intercept(image, lines):
+def average_slope_intercept(image, lines, lines_2):
     left_fit = []
     right_fit = []
     fits = []
-    for line in lines:
-        x1, y1, x2, y2 = line.reshape(4)
+    for i in range(len(lines)):
+        if lines_2[i][0][1] < 0.5:
+            continue
+
+        x1, y1, x2, y2 = lines[i].reshape(4)
           
         # It will fit the polynomial and the intercept and slope
         parameters = np.polyfit((x1, x2), (y1, y2), 1) 
         slope = parameters[0]
         intercept = parameters[1]
-        if abs(slope) > 0.7:
-            continue
         print(" SLOPE: ", slope, (x1, y1, x2, y2))
         fits.append([slope, intercept])
         if slope < 0:
@@ -90,16 +91,25 @@ cropped_image = region_of_interest(canny_image)
 lines = cv2.HoughLinesP(cropped_image, 1, np.pi / 180, 50, 
                         np.array([]), minLineLength = 5, 
                         maxLineGap = 40) 
-
+lines_2 = cv2.HoughLines(cropped_image, 1, np.pi / 180, 50, 
+                        np.array([]))
+print("lines", lines)
+print("lines_2", lines_2)
+print("SIZES", len(lines), len(lines_2))
 temp_img = img.copy()
-for i in lines:
-    a,b,c,d = i[0]
-    print(i[0], colors[counter])
+for k in range(len(lines)):
+    # if lines_2[k][0][1] > 1.39 and lines_2[k][0][1] < 1.74:
+    #     continue
+    a,b,c,d = lines[k][0]
+    a = lines
+    print(lines[k][0], colors[counter])
     cv2.line(temp_img, (a,b), (c,d), colors[counter], 3, cv2.LINE_AA)
+    cv2.imshow("TEMP IMAGE", temp_img)
+    cv2.waitKey(0) 
     counter = (counter + 1) % len(colors)
 
 cv2.imshow("TEMP IMAGE", temp_img)
-averaged_lines = average_slope_intercept(frame, lines) 
+averaged_lines = average_slope_intercept(frame, lines, lines_2) 
 line_image = display_lines(frame, averaged_lines)
 combo_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
 

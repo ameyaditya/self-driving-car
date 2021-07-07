@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, Response
+from flask import Flask, jsonify, render_template, Response, send_file
 from flask_cors import CORS, cross_origin
 import time
 import RPi.GPIO as GPIO
@@ -41,6 +41,12 @@ def video_feed():
     return Response(gen(), 
         mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route("/get_image")
+@cross_origin()
+def get_image():
+    return send_file(io.BytesIO(gen()),
+                     attachment_filename='image.jpg',
+                     mimetype='image/jpeg')
 @app.route("/")
 @cross_origin()
 def home_page():
