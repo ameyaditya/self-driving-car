@@ -3,10 +3,10 @@ import numpy as np
 import cv2
 
 from automation_utils import canny_edge_detector, region_of_interest, get_average_slope_intercept
-from control_car import CarController
+# from control_car import CarController
 import config as c
 
-cc = CarController(c.BASE_URL)
+# cc = CarController(c.BASE_URL)
 def check_right_lane():
     pass
 
@@ -57,20 +57,23 @@ def check_average_slope(width_lower_limit, width_upper_limit, lines):
 def run(image):
     height, width = image.shape[:2]
     lines = get_hog_lines(image)
-    while True:
-        if check_if_two_lanes(lines):
-            cc.move_forward(for = 1)
+
+    if check_if_two_lanes(lines):
+        print("MOVE FORWARD, 2 lanes")
+        # cc.move_forward(for = 1)
+    else:
+        left_slopes = check_average_slope(0, width // 2, lines)
+        right_slopes = check_average_slope(width // 2, width, lines)
+        if left_slopes[0] != np.nan and left_slopes[0] > 0:
+            print("MOVE FORWARD, only left")
+            # cc.move_forward(for = 1)
+        elif right_slopes[0] != np.nan and right_slopes[0] < 0:
+            print("MOVE FORWARD, only right")
+            # cc.move_forward(for = 1)
         else:
-            left_slopes = check_average_slope(0, width // 2, lines)
-            right_slopes = check_average_slope(width // 2, width, lines)
-            if left_slopes[0] != np.nan and left_slopes[0] > 0:
-                cc.move_forward(for = 1)
-            elif right_slopes[0] != np.nan and right_slopes[0] < 0:
-                cc.move_forward(for = 1)
-            else:
-                print("CANNOT FIND LANES... EXITING")
+            print("CANNOT FIND LANES... EXITING")
 
 
 
-img = cv2.imread("test1.jpg")
-get_hog_lines(img)
+img = cv2.imread("test2.jpg")
+run(img)

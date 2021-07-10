@@ -27,8 +27,8 @@ mask = np.zeros_like(src3)
 mask_color = 255   #src3The number of channels of the image is 1, and it is a grayscale image, so the color value is 0-255
 cv.fillPoly(mask,regin,mask_color)
 src4 = cv.bitwise_and(src3,mask)
-cv.imshow('bianyuan2',src4)
-cv.waitKey(0)
+# cv.imshow('bianyuan2',src4)
+# cv.waitKey(0)
 
 #Using the principle of Hough transformation to find the straight line composed of pixels in the above picture, and then draw it
 rho = 1

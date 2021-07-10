@@ -43,6 +43,13 @@ def average_slope_intercept(image, lines):
     line3 = create_coordinates(image, line_averages[2])
     return np.array([line1, line2, line3])
 
+def get_average_slope_intercept(lines):
+    fits = [[i[1], i[2]] for i in lines]   
+    
+    kmeans = KMeans(n_clusters = 3, random_state = 0, max_iter = 10).fit(np.array(fits))
+    line_averages = kmeans.cluster_centers_
+    return line_averages
+
 
 def cart2pol(x, y):
     rho = np.sqrt(x**2 + y**2)
